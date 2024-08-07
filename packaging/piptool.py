@@ -71,14 +71,6 @@ import wheel
 
 
 def pip_main(argv):
-    # Extract the certificates from the PAR following the example of get-pip.py
-    # https://github.com/pypa/get-pip/blob/430ba37776ae2ad89/template.py#L164-L168
-    cert_tmpdir = tempfile.mkdtemp()
-    cert_path = os.path.join(cert_tmpdir, "cacert.pem")
-    atexit.register(lambda: shutil.rmtree(cert_tmpdir, ignore_errors=True))
-    with open(cert_path, "wb") as cert:
-      cert.write(pkgutil.get_data("pip._vendor.requests", "cacert.pem"))
-    argv = ["--isolated", "--disable-pip-version-check", "--cert", cert_path] + argv
     return pip.main(argv)
 
 from packaging.whl import Wheel
